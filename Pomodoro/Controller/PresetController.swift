@@ -7,145 +7,118 @@
 
 import UIKit
 
-class PomodoroController: UIViewController {
+class PresetController: UIViewController {
     
     // MARK: - Properties
     
-    // MARK: - Lifecycle
+    private let titleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
+    
+    private let titleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "프리셋"
+        label.textColor = .darkGray
+        label.font = .boldSystemFont(ofSize: 45)
+        return label
+    }()
+    
+    private lazy var plusButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.tintColor = .systemBlue
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 45), forImageIn: .normal)
+        button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // UICollectionView
+    private let collectionView: UICollectionView = {
+        let flowlayout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
+        return cv
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        view.backgroundColor = .systemBackground
         configureUI()
     }
     
-    // MARK: - Selectors
-    
-    // MARK: - API
-    
-    // MARK: - Helpers
-    func configureUI() {
-        view.backgroundColor = .systemRed
-        
-    }
-}
-
-
-//
-//  PodcastViewController.swift
-//  TED_Clone
-//
-//  Created by 민선기 on 2022/03/01.
-//
-
-import UIKit
-
-class PodcastViewController: UICollectionViewController {
-    
-    //MARK: - Properties
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //네비게이션 바 관련 코드입니다. 이것은 viewdidload에 넣으면 나중엔 작동하지않습니다.
+    private func configureUI() {
         navigationController?.navigationBar.isHidden = true
-    }
-    
-
-
-
-
-//MARK: - Helper Functions
-
-private func configureUI() {
-    //백그라운드 컬러를 테드앱과 똑같은 색으로 맞췄습니다.
-    collectionView.backgroundColor = .systemBackground
-    
-    //컬렉션뷰 관련 코드입니다.
-    collectionView.register(PodCastCollectionViewCell.self, forCellWithReuseIdentifier: PodCastCollectionViewCell.identifier)
-    collectionView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier)
-    
-}
-    
-
-    
-    
-    
-
-
- //MARK: - 컬렉션뷰 데이터소스, 델리게이트
-
-    //컬렉션뷰 셀의 갯수입니다.
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return PodcastViewModel.nameList.count
+        // Title
+        view.addSubview(titleView)
+        titleView.anchor(top:view.safeAreaLayoutGuide.topAnchor, left: view.leadingAnchor, right: view.trailingAnchor, paddingLeft: 35, paddingRight: 35, height: 110)
+        
+        titleView.addSubview(titleLabel)
+        titleLabel.centerY(inView: titleView)
+        titleLabel.anchor(left: titleView.leadingAnchor, paddingLeft: 0)
+        
+        titleView.addSubview(plusButton)
+        plusButton.centerY(inView: titleView)
+        plusButton.anchor(right: titleView.trailingAnchor, paddingRight: 0)
+        
+        // Preset
+        view.addSubview(collectionView)
+        collectionView.anchor(top: titleView.bottomAnchor, left: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.trailingAnchor)
+        
+        collectionView.register(PresetViewCell.self, forCellWithReuseIdentifier: PresetViewCell.identifier)
+        
+    }
+    // MARK: - Selectors
+
+    @objc func plusButtonTapped() {
+        print("DEBUG: button Tapped")
+    }
+}
+
+    // MARK: - Lifecycle
+
+
+    // MARK: - API
+
+    // MARK: - Helpers
+
+
+// MARK: - UICollectionViewDataSource
+extension PresetController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
     }
     
-    //컬렉션뷰 셀 생성입니다.
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PodCastCollectionViewCell.identifier, for: indexPath) as? PodCastCollectionViewCell else { return UICollectionViewCell() }
-        cell.imageView.image = PodcastViewModel.imageList[indexPath.row].image
-        cell.labelView.text = PodcastViewModel.nameList[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PresetViewCell.identifier, for: indexPath) as! PresetViewCell
         return cell
     }
-    
-    
-   //컬렉션뷰 헤더 생성입니다.
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as? CollectionReusableView else { return UICollectionReusableView() }
-        return headerView
-    }
-    
-    //셀을 선택 한 뒤에 상세뷰로 이동하는 코드 입니다.
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        PodcastDetailViewController.selectedNum = indexPath.row
-        navigationController?.pushViewController(PodcastDetailViewController(), animated: true)
-
-    }
-    
-
 }
 
+// MARK: - UICollectionViewDelegate
+extension PresetController: UICollectionViewDelegate {
+    
+}
 
-
-
-//MARK: - 컬렉션뷰 셀 레이아웃
-//컴포지셔널 레이아웃으로도 해보기
-extension PodcastViewController: UICollectionViewDelegateFlowLayout {
-    //컬렉션뷰셀의 너비와 높이 조정 메서드입니다.
+// MARK: - UICollectionViewDelegateFlowLayout
+extension PresetController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width / 2 - 35
-        return CGSize(width: width, height: width)
+        return CGSize(width: (view.frame.width - 80) / 2, height: (view.frame.width - 80) / 2)
     }
     
-    //헤더의 너비와 높이 조정 메서드입니다.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
     }
     
-    
-    //컬렉션뷰 셀의 섹션의 상하 좌우 여백 조정 메서드입니다.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 20, bottom: 50, right: 20)
-    }
-    
-    //컬렉션뷰 셀 위 아래 여백 조정 메서드입니다.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 50
+        return 20
     }
-
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
+    }
 }
-
-
-
-
-
-
-

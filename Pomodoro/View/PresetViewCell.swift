@@ -7,53 +7,97 @@
 
 import UIKit
 
-class SearchTableViewCell: UITableViewCell {
+class PresetViewCell: UICollectionViewCell {
     
-    private let thumbnailImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .systemBlue
-        return image
-    }()
+    static let identifier = "PresetCell"
     
-    private let teacherNameLabel: UILabel = {
+    // MARK: - Properties
+    // Label
+    private let PresetNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "뽀모도로 가즈앗!"
-        label.textColor = .lightGray
-        label.font = .systemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .gray
+        label.text = "공부"
+        label.numberOfLines = 1
         return label
     }()
     
-    
-    private let lectureLabel: UILabel = {
+    private let PresetTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "What seaweed and cowburps have to do with climate action"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 16)
-        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = .gray
+        label.text = "25분 / 5회  6회"
+        label.numberOfLines = 1
         return label
     }()
     
+    // Button
+    private let plusButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        button.tintColor = .systemBlue
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 30), forImageIn: .normal)
+        button.addTarget(PresetViewCell.self, action: #selector(plusButtonClicked), for: .touchUpInside)
+        return button
+    }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super .init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .clear
-        setLayout()
+    private let editButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "ellipsis.circle.fill"), for: .normal)
+        button.tintColor = .systemBlue
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 30), forImageIn: .normal)
+        button.addTarget(PresetViewCell.self, action: #selector(editButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // Stack View
+    private lazy var settingStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [plusButton, editButton])
+        sv.axis = .horizontal
+        sv.distribution = .fillEqually
+        sv.spacing = -20
+        return sv
+    }()
+    
+    
+    // MARK: - Lifecycle
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.backgroundColor = .systemBackground
+        contentView.layer.cornerRadius = 10
+        contentView.layer.borderWidth = 2
+        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.layer.masksToBounds = true
+        
+        contentView.addSubview(PresetNameLabel)
+        PresetNameLabel.anchor(top: contentView.topAnchor, left: contentView.leadingAnchor, paddingTop: 20, paddingLeft: 10)
+        
+        contentView.addSubview(PresetTimeLabel)
+        PresetTimeLabel.anchor(left: contentView.leadingAnchor, paddingLeft: 10)
+        PresetTimeLabel.centerY(inView: contentView)
+        
+        contentView.addSubview(settingStackView)
+        settingStackView.anchor(left: contentView.leadingAnchor, bottom: contentView.bottomAnchor, right: contentView.trailingAnchor, paddingLeft: 0, paddingBottom: 20, paddingRight: 0)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Selectors
     
-    private func setLayout() {
-        addSubview(thumbnailImage)
-        thumbnailImage.centerY(inView: self)
-        thumbnailImage.anchor(left: self.leadingAnchor, paddingLeft: 20,width: 160,height: 90)
-        
-        addSubview(teacherNameLabel)
-        teacherNameLabel.anchor(top: thumbnailImage.topAnchor,left: thumbnailImage.trailingAnchor,right: self.trailingAnchor,paddingTop:5 ,paddingLeft: 20,paddingRight: 20)
-        
-        addSubview(lectureLabel)
-        lectureLabel.anchor(left: thumbnailImage.trailingAnchor,bottom: thumbnailImage.bottomAnchor,right: self.trailingAnchor,paddingLeft: 20,paddingBottom: 5,paddingRight: 20)
+    @objc func plusButtonClicked() {
+        print("button Tapped")
     }
+    
+    @objc func editButtonTapped() {
+        print("button Tapped")
+    }
+    
+    // MARK: - API
+    
+    // MARK: - Helpers
+    
 }

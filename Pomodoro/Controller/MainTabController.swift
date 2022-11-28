@@ -4,26 +4,64 @@
 //
 //  Created by 소범석 on 2022/10/19.
 //
-
 import UIKit
+import AudioToolbox
+
+enum TimerStatus {
+    case start
+    case pause
+    case end
+}
 
 class MainTabController: UITabBarController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    // MARK: - Properties
+    
+    // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+      navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureViewControllers()
+        
     }
-    */
+    
+    // MARK: - Helpers
+    func configureViewControllers() {
+        let home = HomeController()
+        let nav1 = templateNavigationController(image: UIImage(systemName: "house"), title: "홈", rootViewController: home)
+       
+        let waitingList = WaitingListController()
+        let nav2 = templateNavigationController(image: UIImage(systemName: "list.bullet.rectangle.portrait"), title: "대기목록", rootViewController: waitingList)
+        
+        let preset = PresetController()
+        let nav3 = templateNavigationController(image: UIImage(systemName: "highlighter"), title: "프리셋", rootViewController: preset)
+
+        viewControllers = [nav1, nav2, nav3]
+    }
+    
+    func templateNavigationController(image: UIImage?, title: String?, rootViewController: UIViewController) -> UINavigationController {
+        let nav = UINavigationController(rootViewController: rootViewController)
+        nav.tabBarItem.image = image
+        nav.navigationBar.tintColor = .red
+        nav.title = title
+        nav.navigationBar.barTintColor = .white
+        return nav
+    }
+    
+    // MARK: - Selectors
+
+    // MARK: - API
+
+    
+
+   
 
 }
+
+
+
