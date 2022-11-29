@@ -7,31 +7,33 @@
 
 import UIKit
 
-class HomeController: UIViewController {
+final class HomeController: UIViewController {
     
     // MARK: - Properties
     
-    private var TimePicker = UIPickerView()
+    private var timePicker = UIPickerView()
     
-    let Times = ["15분", "25분", "30분", "50분"]
-    var duration: Int = 60
-    var timerStatus: TimerStatus = .end
-    var timer: DispatchSourceTimer?
-    var currentSeconds = 0
-    var progressBar: UIProgressView!
+    private var timer = Timer()
     
-    let circularProgressBarView = CircularProgressBarView()
-    var circularViewDuration: TimeInterval = 2
+    private let runtimes = [15, 25, 30, 50]
     
-    let topImageContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = .yellow
-        return view
-    }()
+    var runtime: Int = 0
+    var downtime: Int = 0
+    var time: Int = 0
     
-    let animatedCountingLabel: UILabel = {
+    private lazy var duration: Int = 60
+    private lazy var timerStatus: TimerStatus = .end
+//    private var timer: DispatchSourceTimer?
+    private lazy var currentSeconds = 0
+    private var progressBar: UIProgressView!
+    
+    private let circularProgressBarView = CircularProgressBarView()
+    private lazy var circularViewDuration: TimeInterval = 2
+    
+    private let topImageContainer = UIView()
+    
+    private var animatedCountingLabel: UILabel = {
         let label = UILabel()
-//        label.font = UIFont.init(name: "HelveticaNeue-Bold", size: 55)
         label.font = UIFont.italicSystemFont(ofSize: 55)
         label.textColor = .darkGray
         label.text = "00:00"
@@ -50,31 +52,74 @@ class HomeController: UIViewController {
         return button
     }()
     
+    private let runTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .gray
+        label.text = "집중"
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let downTimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .gray
+        label.text = "휴식"
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private let timesLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.textColor = .gray
+        label.text = "반복"
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    // Stack View
+    private lazy var HStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [runTimeLabel, downTimeLabel, timesLabel])
+        sv.axis = .horizontal
+        sv.alignment = .fill
+        sv.distribution = .fillEqually
+        return sv
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        TimePicker.delegate = self
-        TimePicker.dataSource = self
+        timePicker.delegate = self
+        timePicker.dataSource = self
         
         configureUI()
+        configure()
         setUpCircularProgressBarView()
     }
     
-    
+    deinit {
+        timer.invalidate()
+    }
     // MARK: - Selectors
     
     @objc func playButtonTapped() {
         print("play Button Tapped")
+        setTimer(with: timePicker.selectedRow(inComponent: 0))
     }
     
     // MARK: - API
     
     // MARK: - Helpers
     
-    func configureUI() {
+    private func configureUI() {
         view.addSubview(topImageContainer)
         topImageContainer.anchor(top: view.topAnchor, left: view.leadingAnchor, right: view.trailingAnchor)
         topImageContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
@@ -82,61 +127,118 @@ class HomeController: UIViewController {
         topImageContainer.addSubview(circularProgressBarView)
         circularProgressBarView.progressColor = .red
         circularProgressBarView.trackColor = .lightGray
+        circularProgressBarView.progress = 1
         circularProgressBarView.anchor(width: 300, height: 300)
         circularProgressBarView.centerX(inView: topImageContainer)
         circularProgressBarView.centerY(inView: topImageContainer)
+        
+        topImageContainer.addSubview(animatedCountingLabel)
+        animatedCountingLabel.anchor(width: 200, height: 100)
+        animatedCountingLabel.centerX(inView: topImageContainer)
+        animatedCountingLabel.centerY(inView: topImageContainer)
          
         view.addSubview(playButton)
-        playButton.anchor()
+        playButton.anchor(top: circularProgressBarView.bottomAnchor)
         playButton.centerX(inView: view)
-        playButton.centerY(inView: view)
         
+        view.addSubview(HStackView)
+        HStackView.anchor(top: playButton.bottomAnchor, paddingTop: 80, width: timePicker.frame.width)
+        HStackView.centerX(inView: view)
         
-        view.addSubview(TimePicker)
-        TimePicker.selectRow(1, inComponent: 0, animated: true)
-        TimePicker.anchor(top: playButton.bottomAnchor, paddingTop: 30)
-        TimePicker.centerX(inView: view)
+        view.addSubview(timePicker)
+        timePicker.selectRow(1, inComponent: 0, animated: true)
+        timePicker.selectRow(4, inComponent: 1, animated: true)
+        timePicker.selectRow(4, inComponent: 2, animated: true)
+        timePicker.anchor(top: HStackView.bottomAnchor)
+        timePicker.centerX(inView: view)
         
 //        circularProgressBarView.center = topImageContainerView.convert(topImageContainerView.center, from: view)
 //        circularProgressBarView.center = CGPoint(x: topImageContainerView.bounds.size.width/2, y: topImageContainerView.bounds.size.height/2)
         
-        view.addSubview(animatedCountingLabel)
-        animatedCountingLabel.anchor(width: 200, height: 100)
-        animatedCountingLabel.centerX(inView: topImageContainer)
-        animatedCountingLabel.centerY(inView: topImageContainer)
         
-        circularProgressBarView.progress = 1
     }
     
-    func setUpCircularProgressBarView() {
+    private func configure() {
         
     }
+    
+    private func setUpCircularProgressBarView() {
+        
+    }
+    
+    // Set Timer function
+    private func setTimer(with countDownSeconds: Int) {
+        let startTime = Date()
+        timer.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] timer in
+            let elapsedTimeSeconds = Int(Date().timeIntervalSince(startTime))
+            let remainSeconds = Int(countDownSeconds) - elapsedTimeSeconds
+            guard remainSeconds >= 0 else {
+                timer.invalidate()
+                return
+            }
+            
+            self?.animatedCountingLabel.text = "\(remainSeconds)"
+        })
+        
+    }
+    
 }
+
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 
 extension HomeController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return 3
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Times.count
+        switch component {
+        case 0:
+            return runtimes.count
+        case 1:
+            return 15
+        case 2:
+            return 10
+        default:
+            return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Times[row]
+        switch component {
+        case 0:
+            return "\(runtimes[row]) 분"
+        case 1:
+            return "\(row + 1) 분"
+        case 2:
+            return "\(row + 1) 회"
+        default:
+            return ""
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            runtime = row
+            animatedCountingLabel.text = String(runtimes[row])
+        case 1:
+            downtime = row
+        case 2:
+            time = row
+        default:
+            break
+        }
+    }
+    
+    // PickerView Layout
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return pickerView.frame.size.width / 3
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 50
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        var title = UILabel()
-        if let view = view { title = view as! UILabel }
-        title.font = UIFont.systemFont(ofSize: 25)
-        title.textColor = UIColor.gray
-        title.text =  Times[row]
-        title.textAlignment = .center
-        return title
     }
 }

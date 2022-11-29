@@ -1,15 +1,20 @@
 //
-//  TimerController.swift
+//  WaitngListController.swift
 //  Pomodoro
 //
-//  Created by 소범석 on 2022/10/19.
+//  Created by 소범석 on 2022/11/10.
 //
 
 import UIKit
 
-class PresetController: UIViewController {
-    
+final class PresetController: UIViewController {
     // MARK: - Properties
+    
+    private var presetListArray: [Preset] = []
+    
+    private var waitingListData = PresetListViewModel()
+    
+    private let tableView = UITableView()
     
     private let titleView: UIView = {
         let view = UIView()
@@ -18,107 +23,119 @@ class PresetController: UIViewController {
     }()
     
     private let titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "프리셋"
         label.textColor = .darkGray
         label.font = .boldSystemFont(ofSize: 45)
         return label
     }()
     
-    private lazy var plusButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        button.tintColor = .systemBlue
-        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 45), forImageIn: .normal)
-        button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-        return button
-    }()
+//    private let plusButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+//        button.tintColor = .systemBlue
+//        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 45), forImageIn: .normal)
+//        button.addTarget(WaitingListController.self, action: #selector(plusButtonTap), for: .touchUpInside)
+//        return button
+//    }()
     
-    // UICollectionView
-    private let collectionView: UICollectionView = {
-        let flowlayout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
-        return cv
-    }()
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
         view.backgroundColor = .systemBackground
         configureUI()
+        setupTableView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+    }
+    
+    // MARK: - Selectors
+    
+//    @objc func plusButtonTap() {
+//        print("DEBUG: button Tapped")
+//    }
+
+    @objc func plusButtonTap() {
+        print("DEBUG: button tap")
+    }
+    //MARK: - Helpers
+
     private func configureUI() {
         navigationController?.navigationBar.isHidden = true
-        
-        // Title
+        // Title View Autolayout
         view.addSubview(titleView)
-        titleView.anchor(top:view.safeAreaLayoutGuide.topAnchor, left: view.leadingAnchor, right: view.trailingAnchor, paddingLeft: 35, paddingRight: 35, height: 110)
+        titleView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leadingAnchor, right: view.trailingAnchor, height: 110)
         
         titleView.addSubview(titleLabel)
         titleLabel.centerY(inView: titleView)
-        titleLabel.anchor(left: titleView.leadingAnchor, paddingLeft: 0)
+        titleLabel.anchor(left: titleView.leadingAnchor, paddingLeft: 35)
         
-        titleView.addSubview(plusButton)
-        plusButton.centerY(inView: titleView)
-        plusButton.anchor(right: titleView.trailingAnchor, paddingRight: 0)
+        // TableView Autolayout
+        view.addSubview(tableView)
+        tableView.anchor(top: titleView.bottomAnchor, left: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.trailingAnchor,
+                         paddingTop: 0, paddingLeft: 35, paddingBottom: 0, paddingRight: 35)
         
-        // Preset
-        view.addSubview(collectionView)
-        collectionView.anchor(top: titleView.bottomAnchor, left: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.trailingAnchor)
-        
-        collectionView.register(PresetViewCell.self, forCellWithReuseIdentifier: PresetViewCell.identifier)
-        
-    }
-    // MARK: - Selectors
-
-    @objc func plusButtonTapped() {
-        print("DEBUG: button Tapped")
-    }
-}
-
-    // MARK: - Lifecycle
-
-
-    // MARK: - API
-
-    // MARK: - Helpers
-
-
-// MARK: - UICollectionViewDataSource
-extension PresetController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PresetViewCell.identifier, for: indexPath) as! PresetViewCell
+    // TableView Setting
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 90
+        tableView.register(PresetListViewCell.self, forCellReuseIdentifier: PresetListViewCell.identifier)
+        tableView.register(PresetListFooterView.self, forHeaderFooterViewReuseIdentifier: PresetListFooterView.identifier)
+        // Temporary Data
+        waitingListData.makePresetListData()
+        presetListArray = waitingListData.getPresetListData()
+    }
+    
+    // FooterView
+//    func getFooterView() -> UIView {
+//        let footer = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: self.tableView.frame.size.height))
+//        footer.backgroundColor = .systemYellow
+//        // Footer Button
+//        let button = UIButton()
+//        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+//        button.tintColor = .systemBlue
+//        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 45), forImageIn: .normal)
+//        button.addTarget(WaitingListController.self, action: #selector(plusButtonTapped), for: .touchUpInside)
+//        button.center = footer.center
+//
+//        footer.bringSubviewToFront(button)
+//        return footer
+//    }
+
+}
+//MARK: - UITableViewDataSource
+
+extension PresetController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presetListArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PresetListViewCell.identifier, for: indexPath) as! PresetListViewCell
         return cell
     }
 }
 
-// MARK: - UICollectionViewDelegate
-extension PresetController: UICollectionViewDelegate {
-    
+//MARK: - UITableViewDelegate
+
+extension PresetController: UITableViewDelegate {
+    // Footer View
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: PresetListFooterView.identifier)
+        return footer
+    }
+    // Footer Height
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 90
+    }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension PresetController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.frame.width - 80) / 2, height: (view.frame.width - 80) / 2)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
-    }
-}
+

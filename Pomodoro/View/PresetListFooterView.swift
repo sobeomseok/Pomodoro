@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WaitingListFooterView: UITableViewHeaderFooterView {
+class PresetListFooterView: UITableViewHeaderFooterView {
     static let identifier = "tableFooter"
     
     private lazy var plusButton: UIButton = {

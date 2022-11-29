@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeWaitngListController: UIViewController {
+final class HomePresetListController: UIViewController {
     
     // MARK: - Properties
     
@@ -55,7 +55,7 @@ final class HomeWaitngListController: UIViewController {
 
 // MARK: - UITableViewDataSource
 
-extension HomeWaitngListController: UITableViewDataSource {
+extension HomePresetListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -68,7 +68,7 @@ extension HomeWaitngListController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension HomeWaitngListController: UITableViewDelegate {
+extension HomePresetListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }

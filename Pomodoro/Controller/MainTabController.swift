@@ -15,8 +15,6 @@ enum TimerStatus {
 
 class MainTabController: UITabBarController {
     
-    // MARK: - Properties
-    
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,13 +33,13 @@ class MainTabController: UITabBarController {
         let home = HomeController()
         let nav1 = templateNavigationController(image: UIImage(systemName: "house"), title: "홈", rootViewController: home)
        
-        let waitingList = WaitingListController()
-        let nav2 = templateNavigationController(image: UIImage(systemName: "list.bullet.rectangle.portrait"), title: "대기목록", rootViewController: waitingList)
+//        let waitingList = WaitingListController()
+//        let nav2 = templateNavigationController(image: UIImage(systemName: "list.bullet.rectangle.portrait"), title: "대기목록", rootViewController: waitingList)
         
         let preset = PresetController()
-        let nav3 = templateNavigationController(image: UIImage(systemName: "highlighter"), title: "프리셋", rootViewController: preset)
+        let nav2 = templateNavigationController(image: UIImage(systemName: "highlighter"), title: "프리셋", rootViewController: preset)
 
-        viewControllers = [nav1, nav2, nav3]
+        viewControllers = [nav1, nav2]
     }
     
     func templateNavigationController(image: UIImage?, title: String?, rootViewController: UIViewController) -> UINavigationController {

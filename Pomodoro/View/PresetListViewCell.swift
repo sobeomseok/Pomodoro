@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class WaitingListViewCell: UITableViewCell {
+final class PresetListViewCell: UITableViewCell {
  
     static let identifier = "waitingListCell"
 
@@ -90,8 +90,8 @@ final class WaitingListViewCell: UITableViewCell {
         HStackView.anchor(left: contentView.leadingAnchor, paddingLeft: 0)
         
         HStackView.addArrangedSubview(mainImageView)
-        mainImageView.anchor(left: contentView.leadingAnchor, paddingLeft: 0, width: 80, height: 80)
-        mainImageView.centerY(inView: contentView)
+        mainImageView.anchor(left: contentView.leadingAnchor, paddingLeft: 0, width: 90, height: 90)
+//        mainImageView.centerY(inView: contentView)
         
         HStackView.addArrangedSubview(waitingListVStackView)
         

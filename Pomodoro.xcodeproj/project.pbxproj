@@ -15,19 +15,19 @@
 		C6176BDA28FD2847005BC08A /* PomodoroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6176BD928FD2847005BC08A /* PomodoroTests.swift */; };
 		C6176BE428FD2847005BC08A /* PomodoroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6176BE328FD2847005BC08A /* PomodoroUITests.swift */; };
 		C6176BE628FD2847005BC08A /* PomodoroUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6176BE528FD2847005BC08A /* PomodoroUITestsLaunchTests.swift */; };
-		C66B5F2A28FFD23800E084FC /* PresetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F2928FFD23800E084FC /* PresetController.swift */; };
 		C66B5F3028FFDAFA00E084FC /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F2F28FFDAFA00E084FC /* MainTabController.swift */; };
 		C66B5F322918CC6800E084FC /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F312918CC6800E084FC /* HomeController.swift */; };
 		C66B5F34291A385900E084FC /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F33291A385900E084FC /* CircularProgressBarView.swift */; };
 		C66B5F37291A41A300E084FC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F36291A41A300E084FC /* Extension.swift */; };
-		C66B5F3F291D010000E084FC /* WaitngListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F3E291D010000E084FC /* WaitngListController.swift */; };
-		C66B5F412921C63700E084FC /* HomeWaitngListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F402921C63700E084FC /* HomeWaitngListController.swift */; };
+		C66B5F3F291D010000E084FC /* PresetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F3E291D010000E084FC /* PresetController.swift */; };
+		C66B5F412921C63700E084FC /* HomePresetListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F402921C63700E084FC /* HomePresetListController.swift */; };
 		C66B5F43292221D600E084FC /* PresetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F42292221D600E084FC /* PresetViewCell.swift */; };
-		C66B5F452923840400E084FC /* WaitingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F442923840400E084FC /* WaitingList.swift */; };
-		C66B5F47292385A500E084FC /* WaitingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F46292385A500E084FC /* WaitingListViewModel.swift */; };
-		C66B5F49292387FE00E084FC /* WaitingListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F48292387FE00E084FC /* WaitingListViewCell.swift */; };
-		C66B5F4B29276BD300E084FC /* WaitingListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F4A29276BD300E084FC /* WaitingListFooterView.swift */; };
+		C66B5F452923840400E084FC /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F442923840400E084FC /* Preset.swift */; };
+		C66B5F47292385A500E084FC /* PresetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F46292385A500E084FC /* PresetListViewModel.swift */; };
+		C66B5F49292387FE00E084FC /* PresetListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F48292387FE00E084FC /* PresetListViewCell.swift */; };
+		C66B5F4B29276BD300E084FC /* PresetListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */; };
 		C67FC14F2930526600AE4EE9 /* HomeWaitngListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */; };
+		C67FC1512935D96900AE4EE9 /* Homeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC1502935D96900AE4EE9 /* Homeset.swift */; };
 		CAA97F184E5C5EBDAB575B98 /* Pods_Pomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE3F0D390CBFB227EAA4444 /* Pods_Pomodoro.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,19 +63,19 @@
 		C6176BDF28FD2847005BC08A /* PomodoroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PomodoroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6176BE328FD2847005BC08A /* PomodoroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroUITests.swift; sourceTree = "<group>"; };
 		C6176BE528FD2847005BC08A /* PomodoroUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C66B5F2928FFD23800E084FC /* PresetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetController.swift; sourceTree = "<group>"; };
 		C66B5F2F28FFDAFA00E084FC /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		C66B5F312918CC6800E084FC /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C66B5F33291A385900E084FC /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		C66B5F36291A41A300E084FC /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		C66B5F3E291D010000E084FC /* WaitngListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitngListController.swift; sourceTree = "<group>"; };
-		C66B5F402921C63700E084FC /* HomeWaitngListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWaitngListController.swift; sourceTree = "<group>"; };
+		C66B5F3E291D010000E084FC /* PresetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetController.swift; sourceTree = "<group>"; };
+		C66B5F402921C63700E084FC /* HomePresetListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresetListController.swift; sourceTree = "<group>"; };
 		C66B5F42292221D600E084FC /* PresetViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetViewCell.swift; sourceTree = "<group>"; };
-		C66B5F442923840400E084FC /* WaitingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingList.swift; sourceTree = "<group>"; };
-		C66B5F46292385A500E084FC /* WaitingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingListViewModel.swift; sourceTree = "<group>"; };
-		C66B5F48292387FE00E084FC /* WaitingListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingListViewCell.swift; sourceTree = "<group>"; };
-		C66B5F4A29276BD300E084FC /* WaitingListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingListFooterView.swift; sourceTree = "<group>"; };
+		C66B5F442923840400E084FC /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
+		C66B5F46292385A500E084FC /* PresetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListViewModel.swift; sourceTree = "<group>"; };
+		C66B5F48292387FE00E084FC /* PresetListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListViewCell.swift; sourceTree = "<group>"; };
+		C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListFooterView.swift; sourceTree = "<group>"; };
 		C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWaitngListViewCell.swift; sourceTree = "<group>"; };
+		C67FC1502935D96900AE4EE9 /* Homeset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homeset.swift; sourceTree = "<group>"; };
 		DEA5D3491EFF449706920C81 /* Pods-Pomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro.release.xcconfig"; path = "Target Support Files/Pods-Pomodoro/Pods-Pomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,9 +184,8 @@
 			children = (
 				C66B5F2F28FFDAFA00E084FC /* MainTabController.swift */,
 				C66B5F312918CC6800E084FC /* HomeController.swift */,
-				C66B5F402921C63700E084FC /* HomeWaitngListController.swift */,
-				C66B5F3E291D010000E084FC /* WaitngListController.swift */,
-				C66B5F2928FFD23800E084FC /* PresetController.swift */,
+				C66B5F402921C63700E084FC /* HomePresetListController.swift */,
+				C66B5F3E291D010000E084FC /* PresetController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -194,7 +193,7 @@
 		C6176BF428FD28DC005BC08A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C66B5F46292385A500E084FC /* WaitingListViewModel.swift */,
+				C66B5F46292385A500E084FC /* PresetListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -204,8 +203,8 @@
 			children = (
 				C66B5F33291A385900E084FC /* CircularProgressBarView.swift */,
 				C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */,
-				C66B5F48292387FE00E084FC /* WaitingListViewCell.swift */,
-				C66B5F4A29276BD300E084FC /* WaitingListFooterView.swift */,
+				C66B5F48292387FE00E084FC /* PresetListViewCell.swift */,
+				C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */,
 				C66B5F42292221D600E084FC /* PresetViewCell.swift */,
 			);
 			path = View;
@@ -214,7 +213,8 @@
 		C6176BF628FD28F4005BC08A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C66B5F442923840400E084FC /* WaitingList.swift */,
+				C66B5F442923840400E084FC /* Preset.swift */,
+				C67FC1502935D96900AE4EE9 /* Homeset.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -411,21 +411,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C66B5F4B29276BD300E084FC /* WaitingListFooterView.swift in Sources */,
+				C66B5F4B29276BD300E084FC /* PresetListFooterView.swift in Sources */,
 				C67FC14F2930526600AE4EE9 /* HomeWaitngListViewCell.swift in Sources */,
 				C66B5F43292221D600E084FC /* PresetViewCell.swift in Sources */,
 				C66B5F34291A385900E084FC /* CircularProgressBarView.swift in Sources */,
-				C66B5F2A28FFD23800E084FC /* PresetController.swift in Sources */,
-				C66B5F47292385A500E084FC /* WaitingListViewModel.swift in Sources */,
+				C66B5F47292385A500E084FC /* PresetListViewModel.swift in Sources */,
 				C6176BC328FD2846005BC08A /* AppDelegate.swift in Sources */,
-				C66B5F3F291D010000E084FC /* WaitngListController.swift in Sources */,
-				C66B5F49292387FE00E084FC /* WaitingListViewCell.swift in Sources */,
-				C66B5F412921C63700E084FC /* HomeWaitngListController.swift in Sources */,
+				C66B5F3F291D010000E084FC /* PresetController.swift in Sources */,
+				C66B5F49292387FE00E084FC /* PresetListViewCell.swift in Sources */,
+				C66B5F412921C63700E084FC /* HomePresetListController.swift in Sources */,
 				C66B5F322918CC6800E084FC /* HomeController.swift in Sources */,
 				C66B5F3028FFDAFA00E084FC /* MainTabController.swift in Sources */,
+				C67FC1512935D96900AE4EE9 /* Homeset.swift in Sources */,
 				C6176BC528FD2846005BC08A /* SceneDelegate.swift in Sources */,
 				C66B5F37291A41A300E084FC /* Extension.swift in Sources */,
-				C66B5F452923840400E084FC /* WaitingList.swift in Sources */,
+				C66B5F452923840400E084FC /* Preset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
