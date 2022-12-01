@@ -27,8 +27,7 @@ final class HomeController: UIViewController {
     private lazy var currentSeconds = 0
     private var progressBar: UIProgressView!
     
-    private let circularProgressBarView = CircularProgressBarView()
-    private lazy var circularViewDuration: TimeInterval = 2
+    
     
     private let topImageContainer = UIView()
     
@@ -52,6 +51,25 @@ final class HomeController: UIViewController {
         return button
     }()
     
+    private lazy var pauseButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        button.tintColor = .systemBlue
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 60), forImageIn: .normal)
+        button.addTarget(self, action: #selector(pauseButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var stopButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "stop.fill"), for: .normal)
+        button.tintColor = .systemBlue
+        button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 60), forImageIn: .normal)
+        button.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // Label
     private let runTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
@@ -111,8 +129,17 @@ final class HomeController: UIViewController {
     // MARK: - Selectors
     
     @objc func playButtonTapped() {
-        print("play Button Tapped")
-        setTimer(with: timePicker.selectedRow(inComponent: 0))
+        if let text = animatedCountingLabel.text, let runtime = Int(text) {
+            setTimer(with: runtime)
+        }
+    }
+    
+    @objc func pauseButtonTapped() {
+        
+    }
+    
+    @objc func stopButtonTapped() {
+        
     }
     
     // MARK: - API
@@ -124,13 +151,13 @@ final class HomeController: UIViewController {
         topImageContainer.anchor(top: view.topAnchor, left: view.leadingAnchor, right: view.trailingAnchor)
         topImageContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
         
-        topImageContainer.addSubview(circularProgressBarView)
-        circularProgressBarView.progressColor = .red
-        circularProgressBarView.trackColor = .lightGray
-        circularProgressBarView.progress = 1
-        circularProgressBarView.anchor(width: 300, height: 300)
-        circularProgressBarView.centerX(inView: topImageContainer)
-        circularProgressBarView.centerY(inView: topImageContainer)
+//        topImageContainer.addSubview(circularProgressBarView)
+//        circularProgressBarView.progressColor = .red
+//        circularProgressBarView.trackColor = .lightGray
+//        circularProgressBarView.progress = 1
+//        circularProgressBarView.anchor(width: 300, height: 300)
+//        circularProgressBarView.centerX(inView: topImageContainer)
+//        circularProgressBarView.centerY(inView: topImageContainer)
         
         topImageContainer.addSubview(animatedCountingLabel)
         animatedCountingLabel.anchor(width: 200, height: 100)
@@ -138,7 +165,8 @@ final class HomeController: UIViewController {
         animatedCountingLabel.centerY(inView: topImageContainer)
          
         view.addSubview(playButton)
-        playButton.anchor(top: circularProgressBarView.bottomAnchor)
+        playButton.anchor(top: topImageContainer.bottomAnchor)
+        
         playButton.centerX(inView: view)
         
         view.addSubview(HStackView)
@@ -151,11 +179,6 @@ final class HomeController: UIViewController {
         timePicker.selectRow(4, inComponent: 2, animated: true)
         timePicker.anchor(top: HStackView.bottomAnchor)
         timePicker.centerX(inView: view)
-        
-//        circularProgressBarView.center = topImageContainerView.convert(topImageContainerView.center, from: view)
-//        circularProgressBarView.center = CGPoint(x: topImageContainerView.bounds.size.width/2, y: topImageContainerView.bounds.size.height/2)
-        
-        
     }
     
     private func configure() {
@@ -173,7 +196,7 @@ final class HomeController: UIViewController {
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] timer in
             let elapsedTimeSeconds = Int(Date().timeIntervalSince(startTime))
-            let remainSeconds = Int(countDownSeconds) - elapsedTimeSeconds
+            let remainSeconds = (countDownSeconds * 60) - elapsedTimeSeconds
             guard remainSeconds >= 0 else {
                 timer.invalidate()
                 return
@@ -186,7 +209,7 @@ final class HomeController: UIViewController {
     
 }
 
-// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+// MARK: - UIPickerViewDelegate & UIPickerViewDataSource
 
 extension HomeController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

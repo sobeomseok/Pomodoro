@@ -17,7 +17,7 @@
 		C6176BE628FD2847005BC08A /* PomodoroUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6176BE528FD2847005BC08A /* PomodoroUITestsLaunchTests.swift */; };
 		C66B5F3028FFDAFA00E084FC /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F2F28FFDAFA00E084FC /* MainTabController.swift */; };
 		C66B5F322918CC6800E084FC /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F312918CC6800E084FC /* HomeController.swift */; };
-		C66B5F34291A385900E084FC /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F33291A385900E084FC /* CircularProgressBarView.swift */; };
+		C66B5F34291A385900E084FC /* CircularTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F33291A385900E084FC /* CircularTimerView.swift */; };
 		C66B5F37291A41A300E084FC /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F36291A41A300E084FC /* Extension.swift */; };
 		C66B5F3F291D010000E084FC /* PresetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F3E291D010000E084FC /* PresetController.swift */; };
 		C66B5F412921C63700E084FC /* HomePresetListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F402921C63700E084FC /* HomePresetListController.swift */; };
@@ -28,6 +28,9 @@
 		C66B5F4B29276BD300E084FC /* PresetListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */; };
 		C67FC14F2930526600AE4EE9 /* HomeWaitngListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */; };
 		C67FC1512935D96900AE4EE9 /* Homeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC1502935D96900AE4EE9 /* Homeset.swift */; };
+		C67FC15329372AC200AE4EE9 /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */; };
+		C67FC15529372D7D00AE4EE9 /* DatePickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */; };
+		C67FC159293888AC00AE4EE9 /* RepeatingSecondsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */; };
 		CAA97F184E5C5EBDAB575B98 /* Pods_Pomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE3F0D390CBFB227EAA4444 /* Pods_Pomodoro.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +68,7 @@
 		C6176BE528FD2847005BC08A /* PomodoroUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C66B5F2F28FFDAFA00E084FC /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		C66B5F312918CC6800E084FC /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		C66B5F33291A385900E084FC /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
+		C66B5F33291A385900E084FC /* CircularTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimerView.swift; sourceTree = "<group>"; };
 		C66B5F36291A41A300E084FC /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C66B5F3E291D010000E084FC /* PresetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetController.swift; sourceTree = "<group>"; };
 		C66B5F402921C63700E084FC /* HomePresetListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresetListController.swift; sourceTree = "<group>"; };
@@ -76,6 +79,9 @@
 		C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetListFooterView.swift; sourceTree = "<group>"; };
 		C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWaitngListViewCell.swift; sourceTree = "<group>"; };
 		C67FC1502935D96900AE4EE9 /* Homeset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homeset.swift; sourceTree = "<group>"; };
+		C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
+		C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerLabel.swift; sourceTree = "<group>"; };
+		C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingSecondsTimer.swift; sourceTree = "<group>"; };
 		DEA5D3491EFF449706920C81 /* Pods-Pomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro.release.xcconfig"; path = "Target Support Files/Pods-Pomodoro/Pods-Pomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,7 +207,7 @@
 		C6176BF528FD28E1005BC08A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C66B5F33291A385900E084FC /* CircularProgressBarView.swift */,
+				C66B5F33291A385900E084FC /* CircularTimerView.swift */,
 				C67FC14E2930526600AE4EE9 /* HomeWaitngListViewCell.swift */,
 				C66B5F48292387FE00E084FC /* PresetListViewCell.swift */,
 				C66B5F4A29276BD300E084FC /* PresetListFooterView.swift */,
@@ -223,6 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				C66B5F36291A41A300E084FC /* Extension.swift */,
+				C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */,
+				C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */,
+				C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */,
 			);
 			name = Utils;
 			path = ../Utils;
@@ -414,13 +423,16 @@
 				C66B5F4B29276BD300E084FC /* PresetListFooterView.swift in Sources */,
 				C67FC14F2930526600AE4EE9 /* HomeWaitngListViewCell.swift in Sources */,
 				C66B5F43292221D600E084FC /* PresetViewCell.swift in Sources */,
-				C66B5F34291A385900E084FC /* CircularProgressBarView.swift in Sources */,
+				C66B5F34291A385900E084FC /* CircularTimerView.swift in Sources */,
 				C66B5F47292385A500E084FC /* PresetListViewModel.swift in Sources */,
+				C67FC15529372D7D00AE4EE9 /* DatePickerLabel.swift in Sources */,
 				C6176BC328FD2846005BC08A /* AppDelegate.swift in Sources */,
+				C67FC159293888AC00AE4EE9 /* RepeatingSecondsTimer.swift in Sources */,
 				C66B5F3F291D010000E084FC /* PresetController.swift in Sources */,
 				C66B5F49292387FE00E084FC /* PresetListViewCell.swift in Sources */,
 				C66B5F412921C63700E084FC /* HomePresetListController.swift in Sources */,
 				C66B5F322918CC6800E084FC /* HomeController.swift in Sources */,
+				C67FC15329372AC200AE4EE9 /* DateTimePicker.swift in Sources */,
 				C66B5F3028FFDAFA00E084FC /* MainTabController.swift in Sources */,
 				C67FC1512935D96900AE4EE9 /* Homeset.swift in Sources */,
 				C6176BC528FD2846005BC08A /* SceneDelegate.swift in Sources */,

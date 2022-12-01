@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - Int
+extension Int {
+    var degreesToRadians: CGFloat {
+        return CGFloat(self) * .pi / 180
+    }
+}
 
 // MARK: - Font
 enum Font: String {
@@ -25,9 +31,6 @@ enum Font: String {
         return Font.Bold.of(size: size)
     }
 }
-// MARK: - Use Font
-// Font.regular(size: 12)
-// Font.bold(size: 16)
 
 //MARK: - 오토레이아웃 확장
 extension UIView {
@@ -104,6 +107,14 @@ extension UIView {
         leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
         trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
         bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+    }
+}
+
+// MARK: - TimeInterval format
+extension TimeInterval {
+    /// %02d: 빈자리를 0으로 채우고, 2자리 정수로 표현
+    var time: String {
+        return String(format:"%02d:%02d", Int(self/60), Int(ceil(truncatingRemainder(dividingBy: 60))) )
     }
 }
 
