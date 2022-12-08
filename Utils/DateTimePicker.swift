@@ -178,23 +178,3 @@ class DateTimePicker: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
   }
   
 }
-
-extension Date {
-
-  static func buildTimeRangeString(startDate: Date, endDate: Date) -> String {
-    
-    let dayFormatter = DateFormatter()
-    dayFormatter.dateFormat = "EEEE, MMM d, yyyy"
-
-    let startTimeFormatter = DateFormatter()
-    startTimeFormatter.dateFormat = "h:mm a"
-    
-    let endTimeFormatter = DateFormatter()
-    endTimeFormatter.dateFormat = "h:mm a"
-    
-    return String(format: "%@ (%@ - %@)",
-                  dayFormatter.string(from: startDate),
-                  startTimeFormatter.string(from: startDate),
-                  endTimeFormatter.string(from: endDate))
-  }
-}

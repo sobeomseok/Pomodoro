@@ -28,8 +28,8 @@ class CircularTimerView: UIView {
     private lazy var circularPath: UIBezierPath = {
         return UIBezierPath(arcCenter: CGPoint(x: bounds.midX, y: bounds.midY),
                             radius: 100, // 반지름
-                            startAngle: -90.degreesToRadians, // 12시 방향 (0도가 3시방향)
-                            endAngle: CGFloat.pi * 2, // 2시 방향
+                            startAngle: -90.degreesToRadians,
+                            endAngle: CGFloat.pi * 2,
                             clockwise: true)
     }()
     

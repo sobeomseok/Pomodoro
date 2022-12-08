@@ -30,7 +30,7 @@
 		C67FC1512935D96900AE4EE9 /* Homeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC1502935D96900AE4EE9 /* Homeset.swift */; };
 		C67FC15329372AC200AE4EE9 /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */; };
 		C67FC15529372D7D00AE4EE9 /* DatePickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */; };
-		C67FC159293888AC00AE4EE9 /* RepeatingSecondsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */; };
+		C67FC15B293D911600AE4EE9 /* PomodoroTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67FC15A293D911600AE4EE9 /* PomodoroTimePicker.swift */; };
 		CAA97F184E5C5EBDAB575B98 /* Pods_Pomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE3F0D390CBFB227EAA4444 /* Pods_Pomodoro.framework */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +81,7 @@
 		C67FC1502935D96900AE4EE9 /* Homeset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homeset.swift; sourceTree = "<group>"; };
 		C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
 		C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerLabel.swift; sourceTree = "<group>"; };
-		C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingSecondsTimer.swift; sourceTree = "<group>"; };
+		C67FC15A293D911600AE4EE9 /* PomodoroTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimePicker.swift; sourceTree = "<group>"; };
 		DEA5D3491EFF449706920C81 /* Pods-Pomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro.release.xcconfig"; path = "Target Support Files/Pods-Pomodoro/Pods-Pomodoro.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,7 +231,7 @@
 				C66B5F36291A41A300E084FC /* Extension.swift */,
 				C67FC15229372AC200AE4EE9 /* DateTimePicker.swift */,
 				C67FC15429372D7D00AE4EE9 /* DatePickerLabel.swift */,
-				C67FC158293888AC00AE4EE9 /* RepeatingSecondsTimer.swift */,
+				C67FC15A293D911600AE4EE9 /* PomodoroTimePicker.swift */,
 			);
 			name = Utils;
 			path = ../Utils;
@@ -427,8 +427,8 @@
 				C66B5F47292385A500E084FC /* PresetListViewModel.swift in Sources */,
 				C67FC15529372D7D00AE4EE9 /* DatePickerLabel.swift in Sources */,
 				C6176BC328FD2846005BC08A /* AppDelegate.swift in Sources */,
-				C67FC159293888AC00AE4EE9 /* RepeatingSecondsTimer.swift in Sources */,
 				C66B5F3F291D010000E084FC /* PresetController.swift in Sources */,
+				C67FC15B293D911600AE4EE9 /* PomodoroTimePicker.swift in Sources */,
 				C66B5F49292387FE00E084FC /* PresetListViewCell.swift in Sources */,
 				C66B5F412921C63700E084FC /* HomePresetListController.swift in Sources */,
 				C66B5F322918CC6800E084FC /* HomeController.swift in Sources */,
