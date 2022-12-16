@@ -17,11 +17,53 @@ enum TimerState {
 final class HomeController: UIViewController {
     
     // MARK: - Properties
-    private var timer = Timer()
     
+    // Top View
+    private let topImageContainer = UIView()
+    
+    // Progress
+    private let progressColors = ProgressColors()
+    
+    private lazy var trackLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.frame = topImageContainer.bounds
+        layer.path = circularPath.cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.strokeColor = progressColors.trackLayerStrokeColor
+        layer.lineWidth = 15
+        return layer
+    }()
+
+    private lazy var barLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.frame = topImageContainer.bounds
+        layer.path = circularPath.cgPath
+        layer.fillColor = UIColor.clear.cgColor
+        layer.strokeColor = progressColors.barLayerStrokeColor
+        layer.lineWidth = 15
+        return layer
+    }()
+    
+    private lazy var circularPath: UIBezierPath = {
+        let path = UIBezierPath(arcCenter: CGPoint(x: topImageContainer.bounds.midX, y: topImageContainer.bounds.midY),
+                               radius: 120,
+                               startAngle: -90.degreesToRadians,
+                               endAngle: CGFloat.pi * 2,
+                               clockwise: true)
+        return path
+    }()
+    
+    let animation = CABasicAnimation(keyPath: "strokeEnd")
+    
+    // Toggle
+    private var isChangedTime = false
+    
+    // Timer
+    private var timer = Timer()
     private var timerState = TimerState.stopped
     
-    private let runtimes = [15, 25, 30, 50]
+    private var remainTime: Int = 0
+    private let runtimes: [Int] = [1, 25, 30, 50]
     private var runtime: Int = 1500
     private var downtime: Int = 5
     private var times: Int = 5
@@ -29,18 +71,6 @@ final class HomeController: UIViewController {
     private var selectedRuntime: Int = 1500
     private var selectedDowntime: Int = 5
     private var selectedTimes: Int = 5
-    
-    private let topImageContainer = UIView()
-    
-    private var animatedCountingLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.italicSystemFont(ofSize: 55)
-        label.textColor = .darkGray
-        label.text = "25:00"
-        label.textAlignment = .center
-        label.contentMode = .scaleAspectFit
-        return label
-    }()
     
     // Button
     private lazy var playButton: UIButton = {
@@ -80,6 +110,16 @@ final class HomeController: UIViewController {
     }()
     
     // Label
+    private var animatedCountingLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.italicSystemFont(ofSize: 55)
+        label.textColor = .darkGray
+        label.text = "25:00"
+        label.textAlignment = .center
+        label.contentMode = .scaleAspectFit
+        return label
+    }()
+    
     private let runTimeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
@@ -141,6 +181,11 @@ final class HomeController: UIViewController {
         
         configureUI()
         configure()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         setUpCircularProgressBarView()
     }
     
@@ -148,41 +193,46 @@ final class HomeController: UIViewController {
     @objc func playButtonTapped() {
         resume()
         startTimer()
+        startAnimation()
     }
     
     @objc func resumeButtonTapped() {
         resume()
         startTimer()
+        resumeAnimation()
     }
     
     @objc func pauseButtonTapped() {
         pause()
+        pauseAnimation()
     }
     
     @objc func stopButtonTapped() {
         stop()
+        stopAnimation()
     }
     
     @objc func updateTimer() {
-            if runtime > 0 {
-                runtime -= 1
-                animatedCountingLabel.text = formatTime(setTime: runtime)
+        if runtime > 0 {
+            runtime -= 1
+            animatedCountingLabel.text = formatTime(setTime: runtime)
+        } else {
+            if downtime > 0 {
+                resumeAnimation()
+                animatedCountingLabel.text = formatTime(setTime: downtime)
+                downtime -= 1
             } else {
-                if downtime > 0 {
+                if times > 0 {
                     animatedCountingLabel.text = formatTime(setTime: downtime)
-                    downtime -= 1
+                    times -= 1
+                    runtime = selectedRuntime + 1 // delay 1 second
+                    downtime = selectedDowntime
                 } else {
-                    if times > 0 {
-                        animatedCountingLabel.text = formatTime(setTime: downtime)
-                        times -= 1
-                        runtime = selectedRuntime + 1 // delay 1 second
-                        downtime = selectedDowntime
-                    } else {
-                        timer.invalidate()
-                        stop()
-                    }
+                    timer.invalidate()
+                    stop()
                 }
             }
+        }
     }
     
     // MARK: - Helpers
@@ -197,23 +247,17 @@ final class HomeController: UIViewController {
         animatedCountingLabel.centerY(inView: topImageContainer)
         
         view.addSubview(ButtonStackView)
-        ButtonStackView.backgroundColor = .yellow
         ButtonStackView.anchor(top: topImageContainer.bottomAnchor, left: view.leadingAnchor, right: view.trailingAnchor,
-                               paddingTop: 0, paddingLeft: 0, paddingRight: 0, height: 60)
+                               paddingTop: -50, paddingLeft: 0, paddingRight: 0, height: 60)
         ButtonStackView.addArrangedSubviews(playButton)
         
         view.addSubview(HStackView)
-        HStackView.anchor(top: ButtonStackView.bottomAnchor, paddingTop: 60, width: timePicker.frame.width)
+        HStackView.anchor(top: ButtonStackView.bottomAnchor, paddingTop: 50, width: timePicker.frame.width)
         HStackView.centerX(inView: view)
         
         view.addSubview(timePicker)
         timePicker.anchor(top: HStackView.bottomAnchor)
         timePicker.centerX(inView: view)
-    }
-    
-    // Start Timer
-    private func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
     }
     
     private func configure() {
@@ -229,8 +273,16 @@ final class HomeController: UIViewController {
         initTimer()
     }
     
+    // Start Timer
+    private func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    // Progress Setting
     private func setUpCircularProgressBarView() {
-        
+        topImageContainer.layer.addSublayer(trackLayer)
+        topImageContainer.layer.addSublayer(barLayer)
+        barLayer.strokeEnd = 0.0
     }
     
     // Set Pomodoro State
@@ -250,6 +302,51 @@ final class HomeController: UIViewController {
         timerState = .stopped
         setTimerButtonsUsingTimerState()
         initTimer()
+    }
+    
+    // Animation Progress State
+    private func startAnimation() {
+        guard let text = animatedCountingLabel.text else { return }
+        let duration = text.convertToTimeInterval() + 1 // set sync
+        
+        resetAnimation()
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = duration
+        animation.isRemovedOnCompletion = false
+        animation.isAdditive = true
+        animation.fillMode = CAMediaTimingFillMode.forwards
+        barLayer.add(animation, forKey: "strokeEnd")
+    }
+    
+    private func resetAnimation() {
+        barLayer.speed = 1.0
+        barLayer.timeOffset = 0.0
+        barLayer.beginTime = 0.0
+        barLayer.strokeEnd = 0.0
+    }
+    
+    private func pauseAnimation() {
+        let pausedTime = barLayer.convertTime(CACurrentMediaTime(), from: nil)
+        barLayer.speed = 0.0
+        barLayer.timeOffset = pausedTime
+    }
+    
+    private func resumeAnimation() {
+        let pausedTime = barLayer.timeOffset
+        barLayer.speed = 1.0
+        barLayer.timeOffset = 0.0
+        barLayer.beginTime = 0.0
+        let timeSincePaused = barLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        barLayer.beginTime = timeSincePaused
+    }
+    
+    func stopAnimation() {
+        barLayer.speed = 1.0
+        barLayer.timeOffset = 0.0
+        barLayer.beginTime = 0.0
+        barLayer.strokeEnd = 0.0
+        barLayer.removeAllAnimations()
     }
     
     // Initailize Timer
@@ -325,14 +422,14 @@ extension HomeController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
-            runtime = runtimes[row] * 60
+            runtime = runtimes[row] * 3
             selectedRuntime = runtime
             animatedCountingLabel.text = formatTime(setTime: runtime)
         case 1:
-            downtime = (row + 1) * 60
+            downtime = (row + 1) * 3
             selectedDowntime = downtime
         case 2:
-            times = (row + 1)
+            times = row
             selectedTimes = times
         default:
             break
